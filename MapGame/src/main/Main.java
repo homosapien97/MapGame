@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 
 import test.FractalBlob;
+import ui.RenderMode;
 import ui.Window;
 import world.City;
 import world.Landmass;
@@ -16,16 +17,16 @@ public class Main extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				Window window = new Window();
+				Window window = new Window(RenderMode.cities);
 				window.setVisible(true);
 			}
 		});
 	}
 	public static void main(String[] args) {
-		World.world.add(new City(500, 500, 1, Color.green));
+		World.world.add(new City(500, 500, 25, Color.green));
 //		World.world.add(new Landmass(500, 500, 600, 15));
 //		World.world.add(new Landmass(500.0, 500.0, 600.0, 15, .6));
-		World.world.add(new Landmass(500.0, 500.0, 600.0, 13, .9, 5, 335, false));
+		World.world.add(new Landmass(500.0, 500.0, 600.0, .9, 3, 3, 1, true, .1));
 		createWindow();
 		
 //		FractalBlob fb = new FractalBlob();

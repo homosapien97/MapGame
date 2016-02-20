@@ -19,9 +19,9 @@ public class Surface extends JPanel implements MouseWheelListener, MouseListener
 	private AffineTransform t = new AffineTransform();
 	private RenderMode rm;
 	private ArrayList<? extends Region> temp;
-	public Surface() {
+	public Surface(RenderMode rm) {
 		super();
-		rm = RenderMode.cities;
+		this.rm = rm;
 		addMouseListener(this);
 		addMouseWheelListener(this);
 	}
@@ -39,8 +39,8 @@ public class Surface extends JPanel implements MouseWheelListener, MouseListener
 //		System.out.println("Center Y: " + (getHeight() / 2 - t.getTranslateY() / t.getScaleY()));
 //		System.out.println("Center X: " + (getWidth() / 2 - t.getTranslateX()) / t.getScaleX());
 //		System.out.println("Center Y: " + (getHeight() / 2 - t.getTranslateY()) / t.getScaleY());
-		System.out.println("Center X: " + centerX());
-		System.out.println("Center Y: " + centerY());
+//		System.out.println("Center X: " + centerX());
+//		System.out.println("Center Y: " + centerY());
 		for(Lens l : rm) {
 			temp = World.world.get(l.class_);
 			if(temp != null) {
@@ -68,6 +68,7 @@ public class Surface extends JPanel implements MouseWheelListener, MouseListener
 						}
 					}
 				}
+				
 			}
 		}
 		drawHUD(g2d);
@@ -76,7 +77,7 @@ public class Surface extends JPanel implements MouseWheelListener, MouseListener
 	public void mouseWheelMoved(MouseWheelEvent e) {
 //		System.out.println("Zooming");
 		double zoom = Math.pow(1.5, -e.getWheelRotation());
-		System.out.println("Zooming: " + zoom);
+//		System.out.println("Zooming: " + zoom);
 //		t.concatenate(AffineTransform.getTranslateInstance(this.getWidth() / 2 - x, this.getHeight() / 2 - y));
 
 //		t.concatenate(AffineTransform.getTranslateInstance(hw - hw * zoom, hh - hh * zoom));
@@ -93,23 +94,27 @@ public class Surface extends JPanel implements MouseWheelListener, MouseListener
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		System.out.println("mouse clicked: (" + worldX(e.getX()) + "," + worldY(e.getY()) + ")");
+//		System.out.println("mouse clicked: (" + worldX(e.getX()) + "," + worldY(e.getY()) + ")");
 //		t.concatenate(AffineTransform.getTranslateInstance((e.getX() - t.getTranslateX()) / t.getScaleX(), (e.getY() - t.getTranslateY()) / t.getScaleY()));
-		t.concatenate(AffineTransform.getTranslateInstance(
-				centerX() - worldX(e.getX()), 
-				centerY() - worldY(e.getY())
-				));
-		repaint();
+		if(e.getButton() == MouseEvent.BUTTON3) {
+			System.out.println("Pos: (" + worldX(e.getX()) + "," + worldY(e.getY()) + ")");
+		} else if(e.getButton() == MouseEvent.BUTTON1) {
+			t.concatenate(AffineTransform.getTranslateInstance(
+					centerX() - worldX(e.getX()), 
+					centerY() - worldY(e.getY())
+					));
+			repaint();
+		}
 	}
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("Mouse Entered");
+//		System.out.println("Mouse Entered");
 	}
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("Mouse Exited");
+//		System.out.println("Mouse Exited");
 	}
 	private double pressX = 0;
 	private double pressY = 0;
@@ -117,7 +122,7 @@ public class Surface extends JPanel implements MouseWheelListener, MouseListener
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getButton() == MouseEvent.BUTTON2) {
-			System.out.println("b2 pressed");
+//			System.out.println("b2 pressed");
 			pressX = worldX(e.getX());
 			pressY = worldY(e.getY());
 		}
@@ -126,9 +131,9 @@ public class Surface extends JPanel implements MouseWheelListener, MouseListener
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if(e.getButton() == MouseEvent.BUTTON2) {
-			System.out.println("b2 released");
-			System.out.println("dx: " + (e.getX() - pressX));
-			System.out.println("dy: " + (e.getY() - pressY));
+//			System.out.println("b2 released");
+//			System.out.println("dx: " + (e.getX() - pressX));
+//			System.out.println("dy: " + (e.getY() - pressY));
 			t.translate(worldX(e.getX()) - pressX, worldY(e.getY()) - pressY);
 		}
 		repaint();

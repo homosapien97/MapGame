@@ -4,8 +4,8 @@ import javax.swing.JFrame;
 
 public class Window extends JFrame{
 	private Surface surface;
-	public Window() {
-		surface = new Surface();
+	public Window(RenderMode rm) {
+		surface = new Surface(rm);
 		this.add(surface);
 		this.setTitle("MapGame");
 		this.setExtendedState(MAXIMIZED_BOTH);
