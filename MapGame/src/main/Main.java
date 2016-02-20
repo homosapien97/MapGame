@@ -22,10 +22,10 @@ public class Main extends JFrame{
 		});
 	}
 	public static void main(String[] args) {
-		World.world.add(new City(500, 500, 5, Color.green));
+		World.world.add(new City(500, 500, 1, Color.green));
 //		World.world.add(new Landmass(500, 500, 600, 15));
 //		World.world.add(new Landmass(500.0, 500.0, 600.0, 15, .6));
-		World.world.add(new Landmass(500.0, 500.0, 600.0, 13, .9, 5));
+		World.world.add(new Landmass(500.0, 500.0, 600.0, 13, .9, 5, 335, false));
 		createWindow();
 		
 //		FractalBlob fb = new FractalBlob();

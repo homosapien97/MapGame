@@ -13,5 +13,5 @@ public class Lens {
 		this.class_ = class_;
 		this.color = color;
 		this.fill = fill;
-	}
+	} 
 }

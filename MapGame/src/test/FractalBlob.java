@@ -5,9 +5,11 @@ import java.awt.geom.Area;
 import java.awt.geom.Path2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class FractalBlob extends Area{
 	private static final ArrayList<double[]> triangle = new ArrayList<double[]>();
+	private Random rand;
 	static {
 		triangle.add(new double[] {0,0});
 		triangle.add(new double[] {1,0});
@@ -16,6 +18,7 @@ public class FractalBlob extends Area{
 	private ArrayList<double[]> points = new ArrayList<double[]>();
 	
 	public FractalBlob() {
+		rand = new Random();
 		for(double[] p : triangle) {
 			points.add(new double[] {p[0], p[1]});
 		}
@@ -39,6 +42,7 @@ public class FractalBlob extends Area{
 		
 	}
 	public FractalBlob(int deformations) {
+		rand = new Random();
 		for(double[] p : triangle) {
 			points.add(new double[] {p[0], p[1]});
 		}
@@ -66,7 +70,7 @@ public class FractalBlob extends Area{
 		p2d.closePath();
 		Rectangle2D r = p2d.getBounds2D();
 		p2d.transform(AffineTransform.getTranslateInstance(-r.getCenterX(), -r.getCenterY()));
-		p2d.transform(AffineTransform.getRotateInstance(Math.random() * Math.PI * 2));
+		p2d.transform(AffineTransform.getRotateInstance(rand.nextDouble() * Math.PI * 2));
 //		for(PathIterator pi = p2d.getPathIterator(null); !pi.isDone(); pi.next()) {
 //			pi.currentSegment(temp);
 //			System.out.println("(" + temp[0] + "," + temp[1] + ")");
@@ -76,6 +80,7 @@ public class FractalBlob extends Area{
 		this.add(a);
 	}
 	public FractalBlob(int deformations, double jaggedness) {
+		rand = new Random();
 		for(double[] p : triangle) {
 			points.add(new double[] {p[0], p[1]});
 		}
@@ -103,7 +108,7 @@ public class FractalBlob extends Area{
 		p2d.closePath();
 		Rectangle2D r = p2d.getBounds2D();
 		p2d.transform(AffineTransform.getTranslateInstance(-r.getCenterX(), -r.getCenterY()));
-		p2d.transform(AffineTransform.getRotateInstance(Math.random() * Math.PI * 2));
+		p2d.transform(AffineTransform.getRotateInstance(rand.nextDouble() * Math.PI * 2));
 //		for(PathIterator pi = p2d.getPathIterator(null); !pi.isDone(); pi.next()) {
 //			pi.currentSegment(temp);
 //			System.out.println("(" + temp[0] + "," + temp[1] + ")");
@@ -112,7 +117,8 @@ public class FractalBlob extends Area{
 		Area a = new Area(p2d);
 		this.add(a);
 	}
-	public FractalBlob(int deformations, double jaggedness, int polySides) {
+	public FractalBlob(int deformations, double jaggedness, int polySides, long seed) {
+		rand = new Random(seed);
 		points = regularUnitPolygon(polySides);
 		Path2D.Double p2d = new Path2D.Double();
 		ArrayList<double[]> newPoints = new ArrayList<double[]>();
@@ -138,7 +144,7 @@ public class FractalBlob extends Area{
 		p2d.closePath();
 		Rectangle2D r = p2d.getBounds2D();
 		p2d.transform(AffineTransform.getTranslateInstance(-r.getCenterX(), -r.getCenterY()));
-		p2d.transform(AffineTransform.getRotateInstance(Math.random() * Math.PI * 2));
+		p2d.transform(AffineTransform.getRotateInstance(rand.nextDouble() * Math.PI * 2));
 //		for(PathIterator pi = p2d.getPathIterator(null); !pi.isDone(); pi.next()) {
 //			pi.currentSegment(temp);
 //			System.out.println("(" + temp[0] + "," + temp[1] + ")");
@@ -148,50 +154,58 @@ public class FractalBlob extends Area{
 		this.add(a);
 	}
 	
-	private static double[] getMutation(double[] a, double[] b) {
+	private double[] getMutation(double[] a, double[] b) {
 		double[] ret = new double[] {0,0};
 		double dx = b[0] - a[0];
 		double dy = b[1] - a[1];
 		if(dx == 0) {
 			ret[0] = 0;
-			ret[1] = dy * Math.random();
+//			ret[1] = dy * Math.random();
+			ret[1] = dy * rand.nextDouble();
 		} else {
-			ret[0] = dx * Math.random();
+//			ret[0] = dx * Math.random();
+			ret[0] = dx * rand.nextDouble();
 			ret[1] = ret[0] * dy/dx;
 		}
 		
 //		dx = Math.sqrt((dx * dx + dy * dy) / (minv * minv + 1)) * Math.random();
 		if(dy == 0) {
-			dy = dx * Math.random() / 2;
+//			dy = dx * Math.random() / 2;
+			dy = dx * rand.nextDouble() / 2;
 			dx = 0;
 		} else {
 			double minv = -dx/dy;
-			dx = Math.sqrt((dx * dx + dy * dy) / (minv * minv + 1)) * Math.random() / 2;
+//			dx = Math.sqrt((dx * dx + dy * dy) / (minv * minv + 1)) * Math.random() / 2;
+			dx = Math.sqrt((dx * dx + dy * dy) / (minv * minv + 1)) * rand.nextDouble() / 2;
 			dy = minv * dx;
 		}
 		ret[0] += dx + a[0];
 		ret[1] += dy + a[1];
 		return ret;
 	}
-	private static double[] getMutation(double[] a, double[] b, double jaggedness) {
+	private double[] getMutation(double[] a, double[] b, double jaggedness) {
 		double[] ret = new double[] {0,0};
 		double dx = b[0] - a[0];
 		double dy = b[1] - a[1];
 		if(dx == 0) {
 			ret[0] = 0;
-			ret[1] = dy * Math.random();
+//			ret[1] = dy * Math.random();
+			ret[1] = dy * rand.nextDouble();
 		} else {
-			ret[0] = dx * Math.random();
+//			ret[0] = dx * Math.random();
+			ret[0] = dx * rand.nextDouble();
 			ret[1] = ret[0] * dy/dx;
 		}
 		
 //		dx = Math.sqrt((dx * dx + dy * dy) / (minv * minv + 1)) * Math.random();
 		if(dy == 0) {
-			dy = dx * Math.random() / 2 * jaggedness;
+//			dy = dx * Math.random() / 2 * jaggedness;
+			dy = dx * rand.nextDouble() / 2 * jaggedness;
 			dx = 0;
 		} else {
 			double minv = -dx/dy;
-			dx = Math.sqrt((dx * dx + dy * dy) / (minv * minv + 1)) * Math.random() / 2 * jaggedness;
+//			dx = Math.sqrt((dx * dx + dy * dy) / (minv * minv + 1)) * Math.random() / 2 * jaggedness;
+			dx = Math.sqrt((dx * dx + dy * dy) / (minv * minv + 1)) * rand.nextDouble() / 2 * jaggedness;
 			dy = minv * dx;
 		}
 		ret[0] += dx + a[0];
