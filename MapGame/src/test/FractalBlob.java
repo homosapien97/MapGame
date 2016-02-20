@@ -1,0 +1,226 @@
+package test;
+
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Area;
+import java.awt.geom.Path2D;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+
+public class FractalBlob extends Area{
+	private static final ArrayList<double[]> triangle = new ArrayList<double[]>();
+	static {
+		triangle.add(new double[] {0,0});
+		triangle.add(new double[] {1,0});
+		triangle.add(new double[] {0.5, Math.sqrt(3)/2});
+	}
+	private ArrayList<double[]> points = new ArrayList<double[]>();
+	
+	public FractalBlob() {
+		for(double[] p : triangle) {
+			points.add(new double[] {p[0], p[1]});
+		}
+//		ArrayList<double[]> newPoints = new ArrayList<double[]>();
+		Path2D.Double p2d = new Path2D.Double();
+//		for(int i = 0; i < points.size(); i++) {
+//			newPoints.add(points.get(i));
+//			newPoints.add(getMutation(points.get(i), points.get((i + 1) % points.size())));
+//		}
+		double[] temp = points.get(0);
+		p2d.moveTo(temp[0], temp[1]);
+		for(int i = 1; i < points.size(); i++) {
+			temp = points.get(i);
+			p2d.lineTo(temp[0], temp[1]);
+			temp = getMutation(temp, points.get((i + 1) % points.size()));
+			p2d.lineTo(temp[0], temp[1]);
+		}
+//		points = newPoints;
+		p2d.closePath();
+		this.add(new Area(p2d));
+		
+	}
+	public FractalBlob(int deformations) {
+		for(double[] p : triangle) {
+			points.add(new double[] {p[0], p[1]});
+		}
+		Path2D.Double p2d = new Path2D.Double();
+		ArrayList<double[]> newPoints = new ArrayList<double[]>();
+		for(int j = 0; j < deformations; j++) {
+			for(int i = 0; i < points.size(); i++) {
+				newPoints.add(points.get(i));
+				newPoints.add(getMutation(points.get(i), points.get((i + 1) % points.size())));
+			}
+			
+			points.clear();
+			points.addAll(newPoints);
+			newPoints.clear();
+//			System.out.println(points.size());
+		}
+		double[] temp = points.get(0);
+		p2d.moveTo(temp[0], temp[1]);
+		for(int i = 1; i < points.size(); i++) {
+			temp = points.get(i);
+			p2d.lineTo(temp[0], temp[1]);
+			temp = getMutation(temp, points.get((i + 1) % points.size()));
+			p2d.lineTo(temp[0], temp[1]);
+		}
+		p2d.closePath();
+		Rectangle2D r = p2d.getBounds2D();
+		p2d.transform(AffineTransform.getTranslateInstance(-r.getCenterX(), -r.getCenterY()));
+		p2d.transform(AffineTransform.getRotateInstance(Math.random() * Math.PI * 2));
+//		for(PathIterator pi = p2d.getPathIterator(null); !pi.isDone(); pi.next()) {
+//			pi.currentSegment(temp);
+//			System.out.println("(" + temp[0] + "," + temp[1] + ")");
+//		}
+//		System.out.println(p2d);
+		Area a = new Area(p2d);
+		this.add(a);
+	}
+	public FractalBlob(int deformations, double jaggedness) {
+		for(double[] p : triangle) {
+			points.add(new double[] {p[0], p[1]});
+		}
+		Path2D.Double p2d = new Path2D.Double();
+		ArrayList<double[]> newPoints = new ArrayList<double[]>();
+		for(int j = 0; j < deformations; j++) {
+			for(int i = 0; i < points.size(); i++) {
+				newPoints.add(points.get(i));
+				newPoints.add(getMutation(points.get(i), points.get((i + 1) % points.size()), jaggedness));
+			}
+			
+			points.clear();
+			points.addAll(newPoints);
+			newPoints.clear();
+//			System.out.println(points.size());
+		}
+		double[] temp = points.get(0);
+		p2d.moveTo(temp[0], temp[1]);
+		for(int i = 1; i < points.size(); i++) {
+			temp = points.get(i);
+			p2d.lineTo(temp[0], temp[1]);
+			temp = getMutation(temp, points.get((i + 1) % points.size()));
+			p2d.lineTo(temp[0], temp[1]);
+		}
+		p2d.closePath();
+		Rectangle2D r = p2d.getBounds2D();
+		p2d.transform(AffineTransform.getTranslateInstance(-r.getCenterX(), -r.getCenterY()));
+		p2d.transform(AffineTransform.getRotateInstance(Math.random() * Math.PI * 2));
+//		for(PathIterator pi = p2d.getPathIterator(null); !pi.isDone(); pi.next()) {
+//			pi.currentSegment(temp);
+//			System.out.println("(" + temp[0] + "," + temp[1] + ")");
+//		}
+//		System.out.println(p2d);
+		Area a = new Area(p2d);
+		this.add(a);
+	}
+	public FractalBlob(int deformations, double jaggedness, int polySides) {
+		points = regularUnitPolygon(polySides);
+		Path2D.Double p2d = new Path2D.Double();
+		ArrayList<double[]> newPoints = new ArrayList<double[]>();
+		for(int j = 0; j < deformations; j++) {
+			for(int i = 0; i < points.size(); i++) {
+				newPoints.add(points.get(i));
+				newPoints.add(getMutation(points.get(i), points.get((i + 1) % points.size()), jaggedness));
+			}
+			
+			points.clear();
+			points.addAll(newPoints);
+			newPoints.clear();
+//			System.out.println(points.size());
+		}
+		double[] temp = points.get(0);
+		p2d.moveTo(temp[0], temp[1]);
+		for(int i = 1; i < points.size(); i++) {
+			temp = points.get(i);
+			p2d.lineTo(temp[0], temp[1]);
+			temp = getMutation(temp, points.get((i + 1) % points.size()));
+			p2d.lineTo(temp[0], temp[1]);
+		}
+		p2d.closePath();
+		Rectangle2D r = p2d.getBounds2D();
+		p2d.transform(AffineTransform.getTranslateInstance(-r.getCenterX(), -r.getCenterY()));
+		p2d.transform(AffineTransform.getRotateInstance(Math.random() * Math.PI * 2));
+//		for(PathIterator pi = p2d.getPathIterator(null); !pi.isDone(); pi.next()) {
+//			pi.currentSegment(temp);
+//			System.out.println("(" + temp[0] + "," + temp[1] + ")");
+//		}
+//		System.out.println(p2d);
+		Area a = new Area(p2d);
+		this.add(a);
+	}
+	
+	private static double[] getMutation(double[] a, double[] b) {
+		double[] ret = new double[] {0,0};
+		double dx = b[0] - a[0];
+		double dy = b[1] - a[1];
+		if(dx == 0) {
+			ret[0] = 0;
+			ret[1] = dy * Math.random();
+		} else {
+			ret[0] = dx * Math.random();
+			ret[1] = ret[0] * dy/dx;
+		}
+		
+//		dx = Math.sqrt((dx * dx + dy * dy) / (minv * minv + 1)) * Math.random();
+		if(dy == 0) {
+			dy = dx * Math.random() / 2;
+			dx = 0;
+		} else {
+			double minv = -dx/dy;
+			dx = Math.sqrt((dx * dx + dy * dy) / (minv * minv + 1)) * Math.random() / 2;
+			dy = minv * dx;
+		}
+		ret[0] += dx + a[0];
+		ret[1] += dy + a[1];
+		return ret;
+	}
+	private static double[] getMutation(double[] a, double[] b, double jaggedness) {
+		double[] ret = new double[] {0,0};
+		double dx = b[0] - a[0];
+		double dy = b[1] - a[1];
+		if(dx == 0) {
+			ret[0] = 0;
+			ret[1] = dy * Math.random();
+		} else {
+			ret[0] = dx * Math.random();
+			ret[1] = ret[0] * dy/dx;
+		}
+		
+//		dx = Math.sqrt((dx * dx + dy * dy) / (minv * minv + 1)) * Math.random();
+		if(dy == 0) {
+			dy = dx * Math.random() / 2 * jaggedness;
+			dx = 0;
+		} else {
+			double minv = -dx/dy;
+			dx = Math.sqrt((dx * dx + dy * dy) / (minv * minv + 1)) * Math.random() / 2 * jaggedness;
+			dy = minv * dx;
+		}
+		ret[0] += dx + a[0];
+		ret[1] += dy + a[1];
+		return ret;
+	}
+	
+	@Override
+	public String toString() {
+		String ret = "";
+		for(double[] p : points) {
+			ret += "(" + p[0] + "," + p[1] + ")\n";
+		}
+		return ret;
+	}
+	
+	private static ArrayList<double[]> regularUnitPolygon(int n) {
+		ArrayList<double[]> ret = new ArrayList<double[]>();
+		ret.add(new double[] {0, 0});
+//		double dTheta = Math.PI - (n - 1) * Math.PI / n;
+		double dTheta = 2 * Math.PI / n;
+		double[] temp;
+		for(int i = 0; i < n - 1; i++) {
+			temp = ret.get(ret.size() - 1);
+			ret.add(new double[] {temp[0] + Math.cos(i * dTheta), temp[1] + Math.sin(i * dTheta)});
+		}
+		for(double[] d : ret) {
+			System.out.println("pol:" + d[0] + "," + d[1]);
+		}
+		return ret;
+	}
+}
