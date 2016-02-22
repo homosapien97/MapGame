@@ -8,6 +8,7 @@ import java.awt.geom.Path2D;
 import java.awt.geom.PathIterator;
 import java.awt.geom.Rectangle2D;
 
+import main.Main;
 import test.FractalBlob;
 
 public class Landmass extends Region{
@@ -29,7 +30,9 @@ public class Landmass extends Region{
 //	}
 	public Landmass(double x, double y, double scale, double jaggedness, int deformations, int polySides, long seed, boolean removeHoles, double smoothRadius) {
 		super(generateLandmass(x, y, scale, jaggedness, deformations, polySides, seed));
-		if(removeHoles) removeHoles();
+		if(removeHoles) {
+			removeHoles();
+		}
 		smooth(smoothRadius);
 	}
 //	private static Area generateLandmass(double x, double y, double scale, int deformations, double jaggedness) {
@@ -58,8 +61,10 @@ public class Landmass extends Region{
 //				System.out.println("\tArea of current largest loop: " + (largest.getBounds2D().getWidth() * largest.getBounds2D().getHeight()));
 //				System.out.println("\tArea of new loop: " + (temp.getBounds2D().getWidth() * temp.getBounds2D().getHeight()));
 //				if(largest.getBounds2D().getWidth() < temp.getBounds2D().getWidth()) {	//if width is larger, than height should be too //this is wrong
-//				World.world.add(new Path(temp, new Color((int)(Math.random() * 256), (int)(Math.random() * 256), (int)(Math.random() * 256))));
-//				World.world.add(new Bounds(temp.getBounds2D()));
+				if(Main.debug) {
+					World.world.add(new Path(temp, new Color((int)(Math.random() * 256), (int)(Math.random() * 256), (int)(Math.random() * 256))));
+//					World.world.add(new Bounds(temp.getBounds2D()));
+				}
 				if(largest.getBounds2D().getWidth() * largest.getBounds2D().getHeight() < temp.getBounds2D().getWidth() * temp.getBounds2D().getHeight()) {
 //					System.out.println("\t!NEW LOOP IS LARGER!");
 //					try {
