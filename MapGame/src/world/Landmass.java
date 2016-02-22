@@ -16,18 +16,6 @@ public class Landmass extends Region{
 	public Landmass(Area a) {
 		super(a, landmassColor);
 	}
-//	public Landmass(double x, double y, double scale, int deformations, boolean removeHoles) {
-//		super(generateLandmass(x, y, scale, deformations, 1.0));
-//		if(removeHoles) removeHoles();
-//	}
-//	public Landmass(double x, double y, double scale, int deformations, double jaggedness, boolean removeHoles) {
-//		super(generateLandmass(x, y, scale, deformations, jaggedness));
-//		if(removeHoles) removeHoles();
-//	}
-//	public Landmass(double x, double y, double scale, int deformations, double jaggedness, int polySides,long seed, boolean removeHoles) {
-//		super(generateLandmass(x, y, scale, deformations, jaggedness, polySides, seed));
-//		if(removeHoles) removeHoles();
-//	}
 	public Landmass(double x, double y, double scale, double jaggedness, int deformations, int polySides, long seed, boolean removeHoles, double smoothRadius) {
 		super(generateLandmass(x, y, scale, jaggedness, deformations, polySides, seed));
 		if(removeHoles) {
@@ -35,12 +23,6 @@ public class Landmass extends Region{
 		}
 		smooth(smoothRadius);
 	}
-//	private static Area generateLandmass(double x, double y, double scale, int deformations, double jaggedness) {
-//		FractalBlob ret = new FractalBlob(deformations, jaggedness);
-//		ret.transform(AffineTransform.getScaleInstance(scale, scale));
-//		ret.transform(AffineTransform.getTranslateInstance(x, y));
-//		return ret;
-//	}
 	private static Area generateLandmass(double x, double y, double scale, double jaggedness, int deformations, int polySides, long seed) {
 		FractalBlob ret = new FractalBlob(deformations, jaggedness, polySides, seed);
 		ret.transform(AffineTransform.getScaleInstance(scale, scale));
@@ -55,23 +37,12 @@ public class Landmass extends Region{
 		int segType = 0;
 		for(; !pi.isDone(); pi.next()) {
 			segType = pi.currentSegment(coords);
-//			if(segType == PathIterator.SEG_MOVETO) {
 			if(segType != PathIterator.SEG_LINETO) {
-//				System.out.println("Loop found at (" + coords[0] + "," + coords[1] + ")");
-//				System.out.println("\tArea of current largest loop: " + (largest.getBounds2D().getWidth() * largest.getBounds2D().getHeight()));
-//				System.out.println("\tArea of new loop: " + (temp.getBounds2D().getWidth() * temp.getBounds2D().getHeight()));
-//				if(largest.getBounds2D().getWidth() < temp.getBounds2D().getWidth()) {	//if width is larger, than height should be too //this is wrong
 				if(Main.debug) {
 					World.world.add(new Path(temp, new Color((int)(Math.random() * 256), (int)(Math.random() * 256), (int)(Math.random() * 256))));
 //					World.world.add(new Bounds(temp.getBounds2D()));
 				}
 				if(largest.getBounds2D().getWidth() * largest.getBounds2D().getHeight() < temp.getBounds2D().getWidth() * temp.getBounds2D().getHeight()) {
-//					System.out.println("\t!NEW LOOP IS LARGER!");
-//					try {
-//						Thread.sleep(6000);
-//					} catch (InterruptedException e) {
-//						e.printStackTrace();
-//					}
 					largest = temp;
 				}
 				temp = new Path2D.Double();
@@ -98,8 +69,6 @@ public class Landmass extends Region{
 					stroke.transform(AffineTransform.getTranslateInstance(old[0], old[1]));
 					smoother.add(stroke);
 				}
-				
-				
 				old[0] = current[0];
 				old[1] = current[1];
 			}

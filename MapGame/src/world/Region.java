@@ -21,4 +21,7 @@ public class Region extends Area{
 	public Color getColor() {
 		return color;
 	}
+	public double approxSize() {
+		return getBounds2D().getWidth() * getBounds2D().getHeight();
+	}
 }

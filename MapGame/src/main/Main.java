@@ -3,9 +3,6 @@ package main;
 import java.awt.Color;
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-
-import test.FractalBlob;
 import ui.RenderMode;
 import ui.Window;
 import world.City;
