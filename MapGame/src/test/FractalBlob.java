@@ -161,22 +161,26 @@ public class FractalBlob extends Area{
 		if(dx == 0) {
 			ret[0] = 0;
 //			ret[1] = dy * Math.random();
-			ret[1] = dy * rand.nextDouble();
+//			ret[1] = dy * rand.nextDouble();
+			ret[1] = dy * centerRand();
 		} else {
 //			ret[0] = dx * Math.random();
-			ret[0] = dx * rand.nextDouble();
+//			ret[0] = dx * rand.nextDouble();
+			ret[0] = dx * centerRand();
 			ret[1] = ret[0] * dy/dx;
 		}
 		
 //		dx = Math.sqrt((dx * dx + dy * dy) / (minv * minv + 1)) * Math.random();
 		if(dy == 0) {
 //			dy = dx * Math.random() / 2;
-			dy = dx * rand.nextDouble() / 2;
+//			dy = dx * rand.nextDouble() / 2;
+			dy = dx * centerRand() / 2;
 			dx = 0;
 		} else {
 			double minv = -dx/dy;
 //			dx = Math.sqrt((dx * dx + dy * dy) / (minv * minv + 1)) * Math.random() / 2;
-			dx = Math.sqrt((dx * dx + dy * dy) / (minv * minv + 1)) * rand.nextDouble() / 2;
+//			dx = Math.sqrt((dx * dx + dy * dy) / (minv * minv + 1)) * rand.nextDouble() / 2;
+			dx = Math.sqrt((dx * dx + dy * dy) / (minv * minv + 1)) * centerRand() / 2;
 			dy = minv * dx;
 		}
 		ret[0] += dx + a[0];
@@ -190,22 +194,26 @@ public class FractalBlob extends Area{
 		if(dx == 0) {
 			ret[0] = 0;
 //			ret[1] = dy * Math.random();
-			ret[1] = dy * rand.nextDouble();
+//			ret[1] = dy * rand.nextDouble();
+			ret[1] = dy * centerRand();
 		} else {
 //			ret[0] = dx * Math.random();
-			ret[0] = dx * rand.nextDouble();
+//			ret[0] = dx * rand.nextDouble();
+			ret[0] = dx * centerRand();
 			ret[1] = ret[0] * dy/dx;
 		}
 		
 //		dx = Math.sqrt((dx * dx + dy * dy) / (minv * minv + 1)) * Math.random();
 		if(dy == 0) {
 //			dy = dx * Math.random() / 2 * jaggedness;
-			dy = dx * rand.nextDouble() / 2 * jaggedness;
+//			dy = dx * rand.nextDouble() / 2 * jaggedness;
+			dy = dx * centerRand() / 2 * jaggedness;
 			dx = 0;
 		} else {
 			double minv = -dx/dy;
 //			dx = Math.sqrt((dx * dx + dy * dy) / (minv * minv + 1)) * Math.random() / 2 * jaggedness;
-			dx = Math.sqrt((dx * dx + dy * dy) / (minv * minv + 1)) * rand.nextDouble() / 2 * jaggedness;
+//			dx = Math.sqrt((dx * dx + dy * dy) / (minv * minv + 1)) * rand.nextDouble() / 2 * jaggedness;
+			dx = Math.sqrt((dx * dx + dy * dy) / (minv * minv + 1)) * centerRand() / 2 * jaggedness;
 			dy = minv * dx;
 		}
 		ret[0] += dx + a[0];
@@ -235,6 +243,11 @@ public class FractalBlob extends Area{
 		for(double[] d : ret) {
 			System.out.println("pol:" + d[0] + "," + d[1]);
 		}
+		return ret;
+	}
+	private double centerRand() {
+		double ret = rand.nextDouble();
+		ret = ret * (4 * ret * ret - 6 * ret + 3);
 		return ret;
 	}
 }
