@@ -73,6 +73,7 @@ public class Landmass extends Region{
 				old[1] = current[1];
 			}
 			add(smoother);
+			removeHoles();
 		}
 	}
 
