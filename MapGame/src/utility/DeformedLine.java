@@ -10,7 +10,7 @@ import java.util.Random;
 public class DeformedLine extends Path2D.Double{
 	private Random rand;
 
-	public DeformedLine(int deformations, double jaggedness, long seed) {
+	public DeformedLine(double jaggedness, int deformations, long seed) {
 		rand = new Random(seed);
 		this.moveTo(0, 0);
 		this.lineTo(1, 0);
@@ -41,7 +41,7 @@ public class DeformedLine extends Path2D.Double{
 		this.transform(AffineTransform.getRotateInstance(rand.nextDouble() * Math.PI * 2));
 	}
 	
-	public DeformedLine(int deformations, double jaggedness, long seed, double startX, double startY, double endX, double endY, Area area) {
+	public DeformedLine(double jaggedness, int deformations, long seed, double startX, double startY, double endX, double endY, Area area) {
 		rand = new Random(seed);
 		this.moveTo(startX, startY);
 		this.lineTo(endX, endY);

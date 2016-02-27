@@ -7,6 +7,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.PathIterator;
 import java.awt.geom.Rectangle2D;
+import java.util.Random;
 
 import main.Main;
 import utility.FractalBlob;
@@ -124,5 +125,16 @@ public class Landmass extends Region{
 			oldPoint[0] = point[0];
 			oldPoint[1] = point[1];
 		}
+	}
+	public void randomInteriorPoint(Random rand, double[] ret) {
+		Rectangle2D bounds = this.getBounds2D();
+		double x = bounds.getWidth() * rand.nextDouble() + bounds.getMinX();
+		double y = bounds.getWidth() * rand.nextDouble() + bounds.getMinY();
+		while(!this.contains(x, y)) {
+			x = bounds.getWidth() * rand.nextDouble() + bounds.getMinX();
+			y = bounds.getWidth() * rand.nextDouble() + bounds.getMinY();
+		}
+		ret[0] = x;
+		ret[1] = y;
 	}
 }

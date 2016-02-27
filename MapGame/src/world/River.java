@@ -6,6 +6,7 @@ import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.PathIterator;
 import java.awt.geom.Rectangle2D;
+import java.util.Random;
 
 import utility.DeformedLine;
 
@@ -14,8 +15,19 @@ public class River extends Region{
 	Landmass landmass;
 	DeformedLine line;
 	
-	public River(int deformations, double jaggedness, long seed, double startX, double startY, double endX, double endY, Landmass landmass, double radius) {
-		line = new DeformedLine(deformations, jaggedness, seed, startX, startY, endX, endY, landmass);
+	public River(double jaggedness, int deformations, long seed, double startX, double startY, double endX, double endY, Landmass landmass, double radius) {
+		super(new Area(), riverColor);
+		line = new DeformedLine(jaggedness, deformations, seed, startX, startY, endX, endY, landmass);
+		this.landmass = landmass;
+		this.smooth(radius);
+	}
+	public River(double jaggedness, int deformations, long seed, Random rand, Landmass landmass, double radius) {
+		super(new Area(), riverColor);
+		double[] start = {0, 0};
+		double[] end = {0, 0};
+		landmass.randomInteriorPoint(rand, start);
+		landmass.edgePoint(rand.nextDouble(), end);
+		line = new DeformedLine(jaggedness, deformations, seed, start[0], start[1], end[0], end[1], landmass);
 		this.landmass = landmass;
 		this.smooth(radius);
 	}

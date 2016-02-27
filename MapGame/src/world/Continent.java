@@ -3,7 +3,7 @@ package world;
 public class Continent extends Region {
 	private Landmass landmass;
 	public Continent(double x, double y, double scale, int deformations, double jaggedness, int polySides, long seed) {
-		landmass = new Landmass(x, y, scale, jaggedness, deformations, polySides, seed, true, -1);
+		landmass = new Landmass(x, y, scale, jaggedness, deformations, polySides, seed, true);
 		add(landmass);
 	}
 	private void generateRivers() {

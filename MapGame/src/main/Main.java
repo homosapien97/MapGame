@@ -2,11 +2,13 @@ package main;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.util.Random;
 
 import ui.RenderMode;
 import ui.Window;
 import world.City;
 import world.Landmass;
+import world.River;
 import world.World;
 
 public class Main{
@@ -25,7 +27,10 @@ public class Main{
 //		World.world.add(new Landmass(500, 500, 600, 15));
 //		World.world.add(new Landmass(500.0, 500.0, 600.0, 15, .6));
 		long seed = (long)(Math.random() * Long.MAX_VALUE);
-		World.world.add(new Landmass(500.0, 500.0, 6000.0, 7.0, 14, 2, seed, true, -1));
+		Landmass landmass = new Landmass(500.0, 500.0, 6000.0, 7.0, 14, 2, seed, true);
+		River river = new River(1.0, 10, seed, new Random(seed), landmass, 1.0);
+		World.world.add(landmass);
+		World.world.add(river);
 		System.out.println("SEED: " + seed);
 		createWindow();
 		
