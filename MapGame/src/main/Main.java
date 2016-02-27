@@ -25,7 +25,7 @@ public class Main{
 //		World.world.add(new Landmass(500, 500, 600, 15));
 //		World.world.add(new Landmass(500.0, 500.0, 600.0, 15, .6));
 		long seed = (long)(Math.random() * Long.MAX_VALUE);
-		World.world.add(new Landmass(500.0, 500.0, 6000.0, 1.0, 10, 2, seed, true, -1));
+		World.world.add(new Landmass(500.0, 500.0, 6000.0, 7.0, 14, 2, seed, true, -1));
 		System.out.println("SEED: " + seed);
 		createWindow();
 		
