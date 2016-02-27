@@ -9,7 +9,7 @@ import java.awt.geom.PathIterator;
 import java.awt.geom.Rectangle2D;
 
 import main.Main;
-import test.FractalBlob;
+import utility.FractalBlob;
 
 public class Landmass extends Region{
 	private static final Color landmassColor = Color.orange;
