@@ -28,9 +28,9 @@ public class Main{
 //		World.world.add(new Landmass(500.0, 500.0, 600.0, 15, .6));
 		long seed = (long)(Math.random() * Long.MAX_VALUE);
 		Landmass landmass = new Landmass(500.0, 500.0, 6000.0, 7.0, 14, 2, seed, true);
-		River river = new River(1.0, 10, seed, new Random(seed), landmass, 1.0);
+//		River river = new River(1.0, 10, seed, new Random(seed), landmass, 1.0);
 		World.world.add(landmass);
-		World.world.add(river);
+//		World.world.add(river);
 		System.out.println("SEED: " + seed);
 		createWindow();
 		

@@ -25,7 +25,7 @@ public class DeformedLine extends Path2D.Double{
 				if(lineType == PathIterator.SEG_MOVETO) {
 					newPath.moveTo(point[0], point[1]);
 				} else {
-					getMutation(oldPoint, point, jaggedness, mutPoint);
+					getMutation(oldPoint, point, jaggedness , mutPoint);
 					newPath.lineTo(mutPoint[0], mutPoint[1]);
 					newPath.lineTo(point[0], point[1]);
 				}
@@ -54,7 +54,9 @@ public class DeformedLine extends Path2D.Double{
 				if(pi.currentSegment(point) == PathIterator.SEG_MOVETO) {
 					newPath.moveTo(point[0], point[1]);
 				} else {
-					getMutation(oldPoint, point, jaggedness, area, mutPoint);
+					do {
+						getMutation(oldPoint, point, jaggedness, area, mutPoint);
+					} while(!area.contains(mutPoint[0], mutPoint[1]));
 					newPath.lineTo(mutPoint[0], mutPoint[1]);
 					newPath.lineTo(point[0], point[1]);
 				}
