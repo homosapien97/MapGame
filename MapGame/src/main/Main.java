@@ -30,8 +30,9 @@ public class Main{
 		Landmass landmass = new Landmass(0.0, 0.0, 6000.0, 7.0, 14, 2, seed, true);
 //		River river = new River(1.0, 8, seed, new Random(seed), landmass, 1.0);
 		River river = new River(1000.0, .2, 800000.0, 8.0, landmass, 800, seed);
+
 		World.world.add(landmass);
-		World.world.add(river);
+//		World.world.add(river);
 		System.out.println("SEED: " + seed);
 		createWindow();
 		
