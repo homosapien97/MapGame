@@ -3,26 +3,23 @@ package world;
 import java.awt.Color;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
-import java.awt.geom.Ellipse2D;
 import java.awt.geom.Path2D;
 import java.awt.geom.PathIterator;
-import java.awt.geom.Rectangle2D;
-import java.util.Random;
 
 import main.Main;
 import utility.FractalBlob;
 
 public class Landmass extends Region{
 	private static final Color landmassColor = Color.orange;
-	private int numEdges = 0;
-	private double perimeter = 0;
+//	private int numEdges = 0;
+//	private double perimeter = 0;
 	/**
 	 * Generates a landmass from a given area. For use with polygonal areas only.
 	 * @param a	Area from which to generate the landmass
 	 */
 	public Landmass(Area a) {
 		super(a, landmassColor);
-		this.calcEdges();
+//		this.calcEdges();
 	}
 	public Landmass(double x, double y, double scale, double jaggedness, int deformations, int polySides, long seed, boolean removeHoles) {
 		super(generateLandmass(x, y, scale, jaggedness, deformations, polySides, seed));
@@ -30,7 +27,7 @@ public class Landmass extends Region{
 			this.removeHoles();
 		}
 //		this.smooth(smoothRadius);
-		this.calcEdges();
+//		this.calcEdges();
 	}
 	private static Area generateLandmass(double x, double y, double scale, double jaggedness, int deformations, int polySides, long seed) {
 		FractalBlob ret = new FractalBlob(deformations, jaggedness, polySides, seed);
@@ -85,56 +82,56 @@ public class Landmass extends Region{
 //			removeHoles();
 //		}
 //	}
-	private void calcEdges() {
-		numEdges = 0;
-		double[] oldPoint = {0, 0};
-		double[] point = {0, 0};
-		for(PathIterator pi = this.getPathIterator(null); !pi.isDone(); pi.next()) {
-			numEdges++;
-			if(pi.currentSegment(point) != PathIterator.SEG_MOVETO) {
-				perimeter += Math.sqrt((oldPoint[0] - point[0]) * (oldPoint[0] - point[0]) + (oldPoint[1] - point[1]) * (oldPoint[1] - point[1]));
-			}
-			oldPoint[0] = point[0];
-			oldPoint[1] = point[1];
-		}
-	}
-	public double perimeter() {
-		return perimeter;
-	}
-	public double numEdges() {
-		return numEdges;
-	}
-	public void edgePoint(double proportionPerimeter, double[] ret) {
-		double[] oldPoint = {0, 0};
-		double[] point = {0, 0};
-		double length = perimeter * proportionPerimeter;
-		for(PathIterator pi = this.getPathIterator(null); !pi.isDone(); pi.next()) {
-			if(pi.currentSegment(point) != PathIterator.SEG_MOVETO) {
-				length -= Math.sqrt((oldPoint[0] - point[0]) * (oldPoint[0] - point[0]) + (oldPoint[1] - point[1]) * (oldPoint[1] - point[1]));
-				if(length < 0) {
-					ret[0] = point[0] - oldPoint[0];
-					ret[1] = point[1] - oldPoint[1];
-					length += Math.sqrt(ret[0] * ret[0] + ret[1] * ret[1]);
-					ret[0] *= length / Math.sqrt(ret[0] * ret[0] + ret[1] * ret[1]);
-					ret[1] *= ret[0] / (point[0] - oldPoint[0]);
-					ret[0] += oldPoint[0];
-					ret[1] += oldPoint[1];
-					break;
-				}
-			}
-			oldPoint[0] = point[0];
-			oldPoint[1] = point[1];
-		}
-	}
-	public void randomInteriorPoint(Random rand, double[] ret) {
-		Rectangle2D bounds = this.getBounds2D();
-		double x = bounds.getWidth() * rand.nextDouble() + bounds.getMinX();
-		double y = bounds.getWidth() * rand.nextDouble() + bounds.getMinY();
-		while(!this.contains(x, y)) {
-			x = bounds.getWidth() * rand.nextDouble() + bounds.getMinX();
-			y = bounds.getWidth() * rand.nextDouble() + bounds.getMinY();
-		}
-		ret[0] = x;
-		ret[1] = y;
-	}
+//	private void calcEdges() {
+//		numEdges = 0;
+//		double[] oldPoint = {0, 0};
+//		double[] point = {0, 0};
+//		for(PathIterator pi = this.getPathIterator(null); !pi.isDone(); pi.next()) {
+//			numEdges++;
+//			if(pi.currentSegment(point) != PathIterator.SEG_MOVETO) {
+//				perimeter += Math.sqrt((oldPoint[0] - point[0]) * (oldPoint[0] - point[0]) + (oldPoint[1] - point[1]) * (oldPoint[1] - point[1]));
+//			}
+//			oldPoint[0] = point[0];
+//			oldPoint[1] = point[1];
+//		}
+//	}
+//	public double perimeter() {
+//		return perimeter;
+//	}
+//	public double numEdges() {
+//		return numEdges;
+//	}
+//	public void edgePoint(double proportionPerimeter, double[] ret) {
+//		double[] oldPoint = {0, 0};
+//		double[] point = {0, 0};
+//		double length = perimeter * proportionPerimeter;
+//		for(PathIterator pi = this.getPathIterator(null); !pi.isDone(); pi.next()) {
+//			if(pi.currentSegment(point) != PathIterator.SEG_MOVETO) {
+//				length -= Math.sqrt((oldPoint[0] - point[0]) * (oldPoint[0] - point[0]) + (oldPoint[1] - point[1]) * (oldPoint[1] - point[1]));
+//				if(length < 0) {
+//					ret[0] = point[0] - oldPoint[0];
+//					ret[1] = point[1] - oldPoint[1];
+//					length += Math.sqrt(ret[0] * ret[0] + ret[1] * ret[1]);
+//					ret[0] *= length / Math.sqrt(ret[0] * ret[0] + ret[1] * ret[1]);
+//					ret[1] *= ret[0] / (point[0] - oldPoint[0]);
+//					ret[0] += oldPoint[0];
+//					ret[1] += oldPoint[1];
+//					break;
+//				}
+//			}
+//			oldPoint[0] = point[0];
+//			oldPoint[1] = point[1];
+//		}
+//	}
+//	public void randomInteriorPoint(Random rand, double[] ret) {
+//		Rectangle2D bounds = this.getBounds2D();
+//		double x = bounds.getWidth() * rand.nextDouble() + bounds.getMinX();
+//		double y = bounds.getWidth() * rand.nextDouble() + bounds.getMinY();
+//		while(!this.contains(x, y)) {
+//			x = bounds.getWidth() * rand.nextDouble() + bounds.getMinX();
+//			y = bounds.getWidth() * rand.nextDouble() + bounds.getMinY();
+//		}
+//		ret[0] = x;
+//		ret[1] = y;
+//	}
 }

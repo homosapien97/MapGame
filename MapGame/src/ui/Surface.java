@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
@@ -28,6 +29,7 @@ public class Surface extends JPanel implements MouseWheelListener, MouseListener
 	private void drawHUD(Graphics2D g) {
 //		g.draw(...
 //		g.drawGlyphVector(g, x, y);
+//		g.drawChars("", 0, 0, 20, 20);
 	}
 	
 	@Override
@@ -94,7 +96,7 @@ public class Surface extends JPanel implements MouseWheelListener, MouseListener
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
-//		System.out.println("mouse clicked: (" + worldX(e.getX()) + "," + worldY(e.getY()) + ")");
+		System.out.println("mouse clicked: (" + worldX(e.getX()) + "," + worldY(e.getY()) + ")");
 //		t.concatenate(AffineTransform.getTranslateInstance((e.getX() - t.getTranslateX()) / t.getScaleX(), (e.getY() - t.getTranslateY()) / t.getScaleY()));
 		if(e.getButton() == MouseEvent.BUTTON3) {
 			System.out.println("Pos: (" + worldX(e.getX()) + "," + worldY(e.getY()) + ")");
@@ -110,6 +112,7 @@ public class Surface extends JPanel implements MouseWheelListener, MouseListener
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
 //		System.out.println("Mouse Entered");
+//		4619.052623794624, -9283.92385139265
 	}
 	@Override
 	public void mouseExited(MouseEvent e) {

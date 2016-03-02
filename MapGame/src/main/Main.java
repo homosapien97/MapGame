@@ -23,12 +23,13 @@ public class Main{
 		});
 	}
 	public static void main(String[] args) {
-		World.world.add(new City(500, 500, 25, Color.green));
+		World.world.add(new City(0, 0, 100, Color.green));
 //		World.world.add(new Landmass(500, 500, 600, 15));
 //		World.world.add(new Landmass(500.0, 500.0, 600.0, 15, .6));
 		long seed = (long)(Math.random() * Long.MAX_VALUE);
-		Landmass landmass = new Landmass(500.0, 500.0, 6000.0, 7.0, 14, 2, seed, true);
-		River river = new River(1.0, 10, seed, new Random(seed), landmass, 1.0);
+		Landmass landmass = new Landmass(0.0, 0.0, 6000.0, 7.0, 14, 2, seed, true);
+//		River river = new River(1.0, 8, seed, new Random(seed), landmass, 1.0);
+		River river = new River(1000.0, .2, 800000.0, 8.0, landmass, 800, seed);
 		World.world.add(landmass);
 		World.world.add(river);
 		System.out.println("SEED: " + seed);
@@ -36,6 +37,7 @@ public class Main{
 		
 //		FractalBlob fb = new FractalBlob();
 //		System.out.println(fb);
+//		3426.3100017539355, -25367.76780383857
 	}
 }
 // good seeds:
