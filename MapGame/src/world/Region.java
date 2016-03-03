@@ -112,4 +112,62 @@ public abstract class Region extends Area{
 			oldPoint[1] = point[1];
 		}
 	}
+	/**
+	 * TODO document. Use at own risk if region is not polygonal.
+	 * @param ax
+	 * @param ay
+	 * @param bx
+	 * @param by
+	 * @return
+	 */
+	public boolean intersectsSegment(double ax, double ay, double bx, double by, boolean equality) {
+		//credit: http://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect
+		//I'm too lazy to figure out the most efficient way to do this by myself
+		double sx = bx - ax;
+		double sy = by - ay;
+		double tx;
+		double ty;
+		double s;
+		double t;
+		double[] point = {0, 0};
+		double[] oldPoint = {0, 0};
+		PathIterator pi = this.getPathIterator(null);
+		pi.currentSegment(oldPoint);
+		pi.next();
+		for(; !pi.isDone(); pi.next()) {
+			pi.currentSegment(point);
+			tx = point[0] - oldPoint[0];
+			ty = point[1] - oldPoint[1];
+			s = (sx * (ay - oldPoint[1]) - sy * (ax - oldPoint[0])) / (-tx * sy + ty * sx);
+			t = (tx * (ay - oldPoint[1]) - ty * (ax - oldPoint[0])) / (-tx * sy + ty * sx);
+			if(equality && (s >= 0 && s <= 1 && t >= 0 && t <= 1) || !equality && (s > 0 && s < 1 && t > 0 && t < 1)) return true;	//WARNING: NOT TRUE INTERSECTION. IF JUST TOUCHING, WILL RETURN FALSE.
+			oldPoint[0] = point[0];
+			oldPoint[1] = point[1];
+		}
+		return false;
+	}
+	public boolean intersectsSegment(double ax, double ay, double bx, double by, double tolerance) {
+		double sx = bx - ax;
+		double sy = by - ay;
+		double tx;
+		double ty;
+		double s;
+		double t;
+		double[] point = {0, 0};
+		double[] oldPoint = {0, 0};
+		PathIterator pi = this.getPathIterator(null);
+		pi.currentSegment(oldPoint);
+		pi.next();
+		for(; !pi.isDone(); pi.next()) {
+			pi.currentSegment(point);
+			tx = point[0] - oldPoint[0];
+			ty = point[1] - oldPoint[1];
+			s = (sx * (ay - oldPoint[1]) - sy * (ax - oldPoint[0])) / (-tx * sy + ty * sx);
+			t = (tx * (ay - oldPoint[1]) - ty * (ax - oldPoint[0])) / (-tx * sy + ty * sx);
+			if(s > -tolerance && s < 1 + tolerance && t > -tolerance && t < 1 + tolerance) return true;	//WARNING: NOT TRUE INTERSECTION. IF JUST TOUCHING, WILL RETURN FALSE.
+			oldPoint[0] = point[0];
+			oldPoint[1] = point[1];
+		}
+		return false;
+	}
 }

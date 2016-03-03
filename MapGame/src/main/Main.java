@@ -12,12 +12,12 @@ import world.River;
 import world.World;
 
 public class Main{
-	public static boolean debug = false;
+	public static boolean debug = true;
 	private static void createWindow() {
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				Window window = new Window(RenderMode.cities);
+				Window window = new Window(RenderMode.debug);
 				window.setVisible(true);
 			}
 		});
@@ -27,11 +27,12 @@ public class Main{
 //		World.world.add(new Landmass(500, 500, 600, 15));
 //		World.world.add(new Landmass(500.0, 500.0, 600.0, 15, .6));
 		long seed = (long)(Math.random() * Long.MAX_VALUE);
-		Landmass landmass = new Landmass(0.0, 0.0, 6000.0, 7.0, 14, 2, seed, true);
+		Landmass landmass = new Landmass(0.0, 0.0, 6000.0, 7.0, 15, 2, seed, true);
 //		River river = new River(1.0, 8, seed, new Random(seed), landmass, 1.0);
-		River river = new River(1000.0, .2, 800000.0, 8.0, landmass, 800, seed);
+		River river = new River(100000.0, .1, 80000000.0, 5.0, landmass, 3000, seed);
 
 		World.world.add(landmass);
+		World.world.add(river);
 //		World.world.add(river);
 		System.out.println("SEED: " + seed);
 		createWindow();
